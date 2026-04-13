@@ -15,7 +15,7 @@ const getDomos = async (req, res) => {
         console.log(err);
         return res.status(500).json({error: 'Error retrieving domos!'})
     }
-}
+};
 
 const makeDomo = async (req, res) => {
     if (!req.body.name || !req.body.age){

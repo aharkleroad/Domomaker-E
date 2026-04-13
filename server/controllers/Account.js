@@ -10,6 +10,10 @@ const logout = (req, res) => {
     return res.redirect('/');
 };
 
+const accountSettings = (req, res) => {
+    return res.render('settings');
+}
+
 const login = (req, res) => {
     const username = `${req.body.username}`;
     const pass = `${req.body.pass}`;
@@ -58,9 +62,43 @@ const signup = async (req, res) => {
     }
 };
 
+const getAccountType = async (req, res) => {
+    try {
+        const query = {owner: req.session.account._id};
+        const docs = await Account.find(query).select('premiumMember').lean().exec();
+        console.log(docs);
+        return res.json({premiumMember: docs});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({error: 'Error retrieving account status!'})
+    }
+}
+
+const changeAccountStatus = async (req, res) => {
+    try {
+        const query = {owner: req.session.account._id};
+        const status = {premiumMember: !req.session.account.premiumMember};
+        console.log(status);
+        const docs = await Account.findOneAndUpdate(query, status, {
+            returnDocument: 'after'
+        }).lean().exec();
+        console.log(docs);
+        return res.json({account: docs});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({error: 'Error changing account status!'});
+    }
+};
+
+
 module.exports = {
     loginPage,
     logout,
     login,
     signup,
+    accountSettings,
+    getAccountType,
+    changeAccountStatus,
 };
