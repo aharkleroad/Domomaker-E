@@ -21,6 +21,7 @@
   "author": "Cody Van De Mark / Austin Willoughby",
   "license": "Apache 2.0",
   "dependencies": {
+    "@types/mapbox-gl": "^3.4.1",
     "bcrypt": "^6.0.0",
     "compression": "^1.8.1",
     "connect-redis": "^9.0.0",
@@ -29,7 +30,9 @@
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.2",
     "helmet": "^8.1.0",
+    "mapbox-gl": "^3.22.0",
     "mongoose": "^8.19.3",
+    "react-map-gl": "^8.1.1",
     "redis": "^5.9.0",
     "serve-favicon": "^2.5.1",
     "underscore": "^1.13.7"

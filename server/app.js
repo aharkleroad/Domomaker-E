@@ -13,7 +13,7 @@ const redis = require('redis');
 const router = require('./router.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/DomoMakerE';
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/WebApp';
 
 mongoose.connect(dbURI).catch((err) => {
     if (err) {
@@ -30,7 +30,36 @@ redisClient.on('error', err => console.log('Redis Client Error', err));
 redisClient.connect().then(() => {
     const app = express();
 
-    app.use(helmet());
+    const scriptSrcUrls = [
+        'https://api.tiles.mapbox.com/',
+        'https://api.mapbox.com/',
+    ];
+    const styleSrcUrls = [
+        'https://api.mapbox.com/',
+        'https://api.tiles.mapbox.com/',
+        'https://fonts.googleapis.com/',
+    ];
+    const connectSrcUrls = [
+        'https://api.mapbox.com/',
+        'https://a.tiles.mapbox.com/',
+        'https://b.tiles.mapbox.com/',
+        'https://events.mapbox.com/',
+    ];
+    const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
+    app.use(
+        helmet.contentSecurityPolicy({
+            directives: {
+                defaultSrc: [],
+                connectSrc: ["'self'", ...connectSrcUrls],
+                scriptSrc: ["'self'", ...scriptSrcUrls],
+                styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+                workerSrc: ["'self'", 'blob:'],
+                objectSrc: [],
+                imgSrc: ["'self'", 'blob:', 'data:'],
+                fontSrc: ["'self'", ...fontSrcUrls],
+            },
+        })
+    );
     app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted`)));
     app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
     app.use(compression());
@@ -41,7 +70,7 @@ redisClient.connect().then(() => {
         store: new RedisStore({
             client: redisClient,
         }),
-        secret: 'Domo Arigato',
+        secret: 'I heart accessibility',
         resave: false,
         saveUninitialized: false,
     }));

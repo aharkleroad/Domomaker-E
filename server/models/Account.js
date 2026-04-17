@@ -33,6 +33,11 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  groups: {
+    type: Array,
+    required: true,
+    default: [],
+  },
   premiumMember: {
     type: Boolean,
     required: true,

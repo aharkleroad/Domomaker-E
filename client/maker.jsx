@@ -2,6 +2,7 @@ const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
+const { Map } = require('react-map-gl/mapbox');
 
 const handleDomo = (e, onDomoAdded) => {
     e.preventDefault();
@@ -74,20 +75,22 @@ const App = () => {
     const [reloadDomos, setReloadDomos] = useState(false);
 
     return (
-        <div>
-            <div id="makeDomo">
-                <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
-            </div>
-            <div id="domos">
-                <DomoList domos={[]} reloadDomos={reloadDomos} />
-            </div>
-        </div>
+        <Map
+            mapboxAccessToken="pk.eyJ1IjoiYXJoNDgxMSIsImEiOiJjbWh0eDhyOHgxeDJyMm1xNmZpNHpzc2NkIn0.RDzFssnoWO4bnwH9qMjofQ"
+            initialViewState={{
+                longitude: -77.674949,
+                latitude: 43.084412,
+                zoom: 14
+            }}
+            style={{ width: 800, height: 600 }}
+            mapStyle="mapbox://styles/mapbox/streets-v9"
+        />
     );
 };
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-    root.render(<App/>);
+    root.render(<App />);
 }
 
 window.onload = init;
