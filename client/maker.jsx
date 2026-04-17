@@ -76,7 +76,7 @@ const App = () => {
 
     return (
         <Map
-            mapboxAccessToken="pk.eyJ1IjoiYXJoNDgxMSIsImEiOiJjbWh0eDhyOHgxeDJyMm1xNmZpNHpzc2NkIn0.RDzFssnoWO4bnwH9qMjofQ"
+            mapboxAccessToken="pk.eyJ1IjoiYXJoNDgxMSIsImEiOiJjbW8zYTVwMjAxMmF0MnJvbjI5NHNrNjlmIn0.BkWfCLcTcE3J5APgH7GRYA"
             initialViewState={{
                 longitude: -77.674949,
                 latitude: 43.084412,
